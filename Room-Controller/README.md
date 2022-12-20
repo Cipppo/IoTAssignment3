@@ -2,7 +2,7 @@
 
 
 ## Hardware Implemented
-[] Led
-[] Photoresistor
-[] Servo
-s
+- [] Led
+- [] Photoresistor
+- [] Servo
+
