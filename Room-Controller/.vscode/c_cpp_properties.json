@@ -10,13 +10,13 @@
             "includePath": [
                 "/home/c1pp0/Desktop/IOT/IoTAssignment3/Room-Controller/include",
                 "/home/c1pp0/Desktop/IOT/IoTAssignment3/Room-Controller/src",
+                "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
                 "/home/c1pp0/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "/home/c1pp0/.platformio/packages/framework-arduino-avr/variants/standard",
                 "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                 "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
-                "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
-                "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 ""
             ],
             "browse": {
@@ -24,13 +24,13 @@
                 "path": [
                     "/home/c1pp0/Desktop/IOT/IoTAssignment3/Room-Controller/include",
                     "/home/c1pp0/Desktop/IOT/IoTAssignment3/Room-Controller/src",
+                    "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
                     "/home/c1pp0/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "/home/c1pp0/.platformio/packages/framework-arduino-avr/variants/standard",
                     "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                     "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
-                    "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
-                    "/home/c1pp0/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     ""
                 ]
             },
