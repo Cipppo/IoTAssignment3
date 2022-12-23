@@ -12,6 +12,10 @@
 #define FREQUENCY 5
 #define PERIOD 1000/FREQUENCY
 
+//Led
+#define LED_PIN 2
+
+
 
 
 
