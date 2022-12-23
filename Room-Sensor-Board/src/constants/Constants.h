@@ -11,4 +11,7 @@
 #define TOPIC "light/mqtt"
 #define PORT 1883
 
+//--PIR--
+#define CALIBRATION_TIME 10
+
 #endif
