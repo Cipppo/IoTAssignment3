@@ -1,7 +1,10 @@
 #include <Arduino.h>
 
+#include "Constants/Constants.h"
+#include "Hardware/Led/Led.h"
+
 void setup() {
-  // put your setup code here, to run once:
+  Serial.begin(9600);
 }
 
 void loop() {
