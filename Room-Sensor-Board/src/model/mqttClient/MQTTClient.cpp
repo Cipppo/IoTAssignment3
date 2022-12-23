@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 
-#include "Constants/Constants.h"
+#include "constants/Constants.h"
 #include "MQTTClient.h"
 
 static WiFiClient espclient;

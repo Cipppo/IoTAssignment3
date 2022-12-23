@@ -1,25 +1,28 @@
 #include <Arduino.h>
+#include<ESP8266WiFi.h>
+
+
+#include "model/wifiNode/WiFiNode.h"
+#include "constants/Constants.h"
+#include "model/mqttClient/MQTTClient.h"
 
 
 
-#include "WiFiNode/WiFiNode.h"
-#include "Constants/Constants.h"
-#include "MQTTClient/MQTTClient.h"
+WiFiNode* wifi;
+MQTTClient* mqttClient;
 
-WiFiNode wifi = WiFiNode("FBIVan", "12345678");
-MQTTClient mqttclient = MQTTClient("broker.mqtt-dashboard.com", "light/mqtt", 1883);
+
+
 
 void setup() {
-    Serial.begin(9600);
-    wifi.connect();
-    mqttclient.setup();
+  Serial.begin(9600);
+  wifi = new WiFiNode();
+  mqttClient = new MQTTClient();
 }
 
 void loop() {
-    if(!mqttclient.isClientConnected()){
-        mqttclient.connect();
-    }else{
-        mqttclient.sendMessage("dp");
-    }
+
+    mqttClient->sendMessage("messaggio");
     delay(1000);
+
 }
