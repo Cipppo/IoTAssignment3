@@ -6,6 +6,7 @@
 Pir::Pir(int pin){
     this->pin = pin;
     pinMode(this->pin, INPUT);
+    this->calibrate();
 }
 
 void Pir::calibrate(){
