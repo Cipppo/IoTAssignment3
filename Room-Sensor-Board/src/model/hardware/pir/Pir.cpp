@@ -24,7 +24,7 @@ bool Pir::scan(){
     if(detection == HIGH){
         return true;
     }else{
-        return false;
+        return false;   
     }
 }
 
