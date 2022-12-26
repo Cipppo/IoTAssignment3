@@ -19,3 +19,7 @@ void Led::turnOn(){
 int Led::getPin(){
     return this->pin;
 }
+
+int Led::readValue(){
+    return digitalRead(this->pin);
+}
