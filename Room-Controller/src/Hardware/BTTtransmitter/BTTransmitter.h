@@ -9,10 +9,11 @@ class BTTransmitter : public Component{
     private:
         int rxPin;
         int txPin;
-        SoftwareSerial channel;
+        //SoftwareSerial channel;
+        char* name;
     
     public:
-        BTTransmitter(int rxPin, int txPin, char name);
+        BTTransmitter(int rxPin, int txPin, char* name);
         bool isAvailable();
         char read();
         void write(char string);
