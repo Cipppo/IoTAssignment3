@@ -1,5 +1,6 @@
 
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 import random
 from paho.mqtt import client as mqtt_client
 import time
@@ -15,10 +16,13 @@ client_id = f'python-mqtt-{random.randint(0, 1000)}'
 
 #-------------FLASK-------------
 app = Flask(__name__)
+CORS(app)
 
 #-------------ARDUINO-----------
 ser = serial.Serial(port="/dev/ttyACM0", baudrate=9600)
 systems = [0]
+servoAlpha = 0
+opened = False
 
 def create_JSON_data(component, value):
     data = {
@@ -37,15 +41,47 @@ def mqtt_handler():
     client.loop_forever()
 
 def server_handler():
+    app.debug = False
     app.run(port=5555)
 
+def get_hours():
+    t = time.localtime()
+    return time.strftime("%H:%M:%S", t)[:2]
+
+def is_servo_open():
+    if(servoAlpha > 0):
+        return True
+    else:
+        return False
+
+def is_daytime():
+    if(int(get_hours()) >= 8 and int(get_hours()) < 19):
+        return True
+    else:
+        return False 
+
 def arduino_handler():
-    lastread = systems[0]
+    global servoAlpha, opened
+    lastLightRead = systems[0]
+    lastServoRead = servoAlpha
     while True:
-        if(systems[0] != lastread):
+        if(systems[0] != lastLightRead):
             data = create_JSON_data("lights", systems[0])
             ser.write(data.encode())
-            lastread = systems[0];
+            lastLightRead = systems[0]
+            print(data)
+        if((not is_servo_open() and is_daytime() and opened == False)):
+            servoAlpha = 180
+            opened = True
+            data = create_JSON_data("servo", servoAlpha)
+            print("Detected Morning opening")
+            ser.write(data.encode())
+            lastServoRead = servoAlpha
+            print(data)
+        if(lastServoRead != servoAlpha):
+            data = create_JSON_data("servo", servoAlpha)
+            ser.write(data.encode())
+            lastServoRead = servoAlpha
             print(data)
         time.sleep(0.2)
         
@@ -82,9 +118,12 @@ def led():
 
 @app.route("/api/slider", methods=['POST'])
 def slider():
+    global servoAlpha
     content = request.json
-    print(content["value"])
-    return content["value"]
+    data = content["body"]
+    data = json.loads(data)
+    servoAlpha = int(data["value"])
+    return data["value"]
 
 startAll()
 
