@@ -64,11 +64,11 @@ chiudiTutto.addEventListener('click', function(e){
 })
 
 timeSet0.addEventListener('click', function(e){
-    axios.get('http://127.0.0.1:5555/api/timeDebug?TIME=8');
+    axios.get('http://127.0.0.1:5555/api/timeDebug?time=8');
 })
 
 timeSet19.addEventListener('click', function(e){
-    axios.get('http://127.0.0.1:5555/api/timeDebug?TIME=19');
+    axios.get('http://127.0.0.1:5555/api/timeDebug?time=19');
 })
 
 setInterval(updateClock, 1000);

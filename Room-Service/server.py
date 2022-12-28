@@ -125,5 +125,17 @@ def slider():
     servoAlpha = int(data["value"])
     return data["value"]
 
+@app.route("/api/servoDebug", methods=["GET"])
+def servoDebug():
+    global servoAlpha
+    content = request.args.get("servoDebug")
+    servoAlpha = int(content)
+
+@app.route("/api/timeDebug", methods=["GET"])
+def timeDebug():
+    content = request.args.get("time")
+    return content
+    
+
 startAll()
 
