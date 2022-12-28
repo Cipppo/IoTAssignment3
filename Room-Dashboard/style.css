@@ -5,3 +5,19 @@
 .selected{
     background-color: yellow;
 }
+
+main aside{
+    display: inline-block;
+}
+
+main{
+    position: relative;
+    width: 50%;
+    float: left;
+}
+
+aside{
+    position: relative;
+    width: 50%;
+    float: right;
+}
