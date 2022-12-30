@@ -9,7 +9,7 @@ class Photores: public Component{
         int pin;
     public:
         Photores(int pin);
-        double readValue();
+        int readValue();
         int getPin();
 };
 
