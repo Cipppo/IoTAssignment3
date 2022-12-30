@@ -11,6 +11,7 @@
 //Photores
 #define FREQUENCY 5
 #define PERIOD 1000/FREQUENCY
+#define PHOTO_PIN A0
 
 //Led
 #define LED_PIN 2
