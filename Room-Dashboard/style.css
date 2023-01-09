@@ -21,3 +21,11 @@ aside{
     width: 50%;
     float: right;
 }
+
+ul{
+    list-style: none;
+}
+
+li{
+    text-align: left;
+}

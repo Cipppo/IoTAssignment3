@@ -19,12 +19,17 @@
         </main>
         <aside class="text-center">
             <h1>Debug Panel</h1>
-            <h2>Motore</h2>
-            <button id="ApriTutto" class="btn btn-light">Apri tutto</button>
-            <button id="ChiudiTutto" class="btn btn-light">Chiudi tutto</button>
-            <h2>Orario(Server)</h2>
-            <button id="timeSet8" class="btn btn-light">Time Set 8.00</button>
-            <button id="timeSet19" class="btn btn-light">Time Set 19.00</button>
+            <ul>
+                <li>
+                    <h1>LED:</h1><div id="LED_DEBUG"></div>
+                </li>
+                <li>
+                    <h1>SERVO:</h1><div id="SERVO_DEBUG"></div>
+                </li>
+                <li>
+                    <h1>LIGHT VALUE: </h1><div id="LIGHT_VALUE"></div>
+                </li>
+            </ul>
         </aside>
     </body>
     <script src="index.js" type="text/javascript"></script>
