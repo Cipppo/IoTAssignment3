@@ -19,11 +19,11 @@ app = Flask(__name__)
 CORS(app)
 
 #-------------ARDUINO-----------
-ser = serial.Serial(port="/dev/ttyACM0", baudrate=9600)
+ser = serial.Serial(port="COM3", baudrate=9600)
 light = 0
 servoAlpha = 0
 lightLevel = 0
-opened = False
+opened = True
 
 def create_JSON_data(lightValue, servoValue):
     data = {
@@ -50,7 +50,7 @@ def get_hours():
     return time.strftime("%H:%M:%S", t)[:2]
 
 def is_servo_open():
-    if(servoAlpha > 0):
+    if(servoAlpha < 180):
         return True
     else:
         return False
@@ -72,10 +72,18 @@ def arduino_handler():
             lastLightRead = light
             print(data)
         if((not is_servo_open() and is_daytime() and opened == False)):
-            servoAlpha = 180
+            servoAlpha = 0
             opened = True
             data = create_JSON_data(light, servoAlpha)
             print("Detected Morning opening")
+            ser.write(data.encode())
+            lastServoRead = servoAlpha
+            print(data)
+        if(is_servo_open() and not is_daytime() and opened == True):
+            servoAlpha = 180
+            opened = False
+            data = create_JSON_data(light, servoAlpha)
+            print("Detected night close!")
             ser.write(data.encode())
             lastServoRead = servoAlpha
             print(data)
@@ -92,7 +100,7 @@ def arduino_handler():
 def startAll():
     server_thread = threading.Thread(target=server_handler).start()
     #mqtt_thread = threading.Thread(target=mqtt_handler).start() DISABLED FOR NO USING
-    #arduino_thread = threading.Thread(target=arduino_handler).start()
+    arduino_thread = threading.Thread(target=arduino_handler).start()
 
 def connect_mqtt():
     def on_connect(client, userdata, flags, rc):
@@ -124,7 +132,7 @@ def slider():
     content = request.json
     data = content["body"]
     data = json.loads(data)
-    servoAlpha = int(data["value"])
+    servoAlpha = int(data["value"]) * 1.8
     return data["value"]
 
 
