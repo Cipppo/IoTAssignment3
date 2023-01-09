@@ -7,6 +7,11 @@ function updateClock() {
     data.innerHTML = ore + ":" + minuti + ":" + secondi;
 }
 
+function updateDebug() {
+    const res = axios.get('http://127.0.0.1:5555/api/debug');
+    
+}
+
 
 
 
@@ -55,20 +60,7 @@ invia.addEventListener("click", function(e){
     .catch(error => console.error(error));
 })
 
-apriTutto.addEventListener('click', function(e){
-    axios.get('http://127.0.0.1:5555/api/servoDebug?ALPHA=0');
-})
 
-chiudiTutto.addEventListener('click', function(e){
-    axios.get('http://127.0.0.1:5555/api/servoDebug?ALPHA=0');
-})
-
-timeSet0.addEventListener('click', function(e){
-    axios.get('http://127.0.0.1:5555/api/timeDebug?time=8');
-})
-
-timeSet19.addEventListener('click', function(e){
-    axios.get('http://127.0.0.1:5555/api/timeDebug?time=19');
-})
 
 setInterval(updateClock, 1000);
+setInterval(updateDebug, 500);
