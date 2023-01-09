@@ -1,3 +1,17 @@
+let accendi = document.getElementById('Accendi');
+let spegni = document.getElementById('Spegni');
+
+let invia = document.getElementById('Invia');
+let slider = document.getElementById('Slider');
+
+let data = document.getElementById('Data');
+
+let debugLed = document.getElementById('LED_DEBUG');
+let debugServo = document.getElementById('SERVO_DEBUG');
+let lightValueDebug = document.getElementById('LIGHT_VALUE')
+
+
+
 function updateClock() {
     // Ivo's content to create the date.
     const d = new Date();
@@ -8,27 +22,12 @@ function updateClock() {
 }
 
 function updateDebug() {
-    const res = axios.get('http://127.0.0.1:5555/api/debug');
-    
+    const res = axios.get('http://127.0.0.1:5555/api/debug').then(result=> {
+        debugLed.innerHTML = result.data["Light"];
+        debugServo.innerHTML = result.data["Servo"];
+        lightValueDebug.innerHTML = result.data["LightLevel"]
+    });
 }
-
-
-
-
-let accendi = document.getElementById('Accendi');
-let spegni = document.getElementById('Spegni');
-
-let invia = document.getElementById('Invia');
-let slider = document.getElementById('Slider');
-
-let data = document.getElementById('Data');
-
-let apriTutto = document.getElementById('ApriTutto');
-let chiudiTutto = document.getElementById('ChiudiTutto');
-
-let timeSet0 = document.getElementById('timeSet8');
-let timeSet19 = document.getElementById('timeSet19');
-
 
 spegni.addEventListener("click", function(e){
     console.log("a");
@@ -59,8 +58,6 @@ invia.addEventListener("click", function(e){
     .then(data => console.log(data))
     .catch(error => console.error(error));
 })
-
-
 
 setInterval(updateClock, 1000);
 setInterval(updateDebug, 500);

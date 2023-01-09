@@ -29,3 +29,7 @@ ul{
 li{
     text-align: left;
 }
+
+li h1 div{
+    display: inline-block;
+}
