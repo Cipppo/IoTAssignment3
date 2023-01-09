@@ -1,13 +1,18 @@
 #include "Controller.h"
+#include "Arduino.h"
 
 Controller::Controller(){
     this->timer = new Timer();
 }
 
 void Controller::init(){
-    //Must call the tasks initi method
+    Serial.println("Init Called");
 }
 
 void Controller::tick(){
-    //Must call the tasks tick methods
+    Serial.println("Tick Called");
+}
+
+Timer* Controller::getTimer(){
+    return this->timer;
 }
