@@ -6,16 +6,29 @@
 #include "DataSerialization/DataDeSerializer.h"
 #include "Hardware/Photores/Photores.h"
 #include "SerialCommunication/SerialComsHandler.h"
+#include "DataSerialization/ReceiveDatagram.h"
+#include "Controller/Controller.h"
 
 #define PIN 2
 
-SerialComsHandler* comsHandler;
+
+
+Controller* controller;
+
+
+void changeTheState(){
+  controller->getTimer()->changeState();
+}
 
 void setup(){
   Serial.begin(9600);
+  controller = new Controller();
+  controller->init();
+  controller->getTimer()->getTimerOne()->attachInterrupt(changeTheState);
+  //Serial.println("Tra 6 secondi il messaggio verra' letto");
 }
 
 void loop(){
-  comsHandler->read();
-  delay(1000);
+  controller->getTimer()->waitForTheNextTick();
+  controller->tick();
 };
