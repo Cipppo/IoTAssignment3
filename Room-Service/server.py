@@ -22,6 +22,7 @@ CORS(app)
 ser = serial.Serial(port="/dev/ttyACM0", baudrate=9600)
 light = 0
 servoAlpha = 0
+lightLevel = 0
 opened = False
 
 def create_JSON_data(lightValue, servoValue):
@@ -91,7 +92,7 @@ def arduino_handler():
 def startAll():
     server_thread = threading.Thread(target=server_handler).start()
     #mqtt_thread = threading.Thread(target=mqtt_handler).start() DISABLED FOR NO USING
-    arduino_thread = threading.Thread(target=arduino_handler).start()
+    #arduino_thread = threading.Thread(target=arduino_handler).start()
 
 def connect_mqtt():
     def on_connect(client, userdata, flags, rc):
@@ -126,16 +127,16 @@ def slider():
     servoAlpha = int(data["value"])
     return data["value"]
 
-@app.route("/api/servoDebug", methods=["GET"])
-def servoDebug():
-    global servoAlpha
-    content = request.args.get("servoDebug")
-    servoAlpha = int(content)
 
-@app.route("/api/timeDebug", methods=["GET"])
-def timeDebug():
-    content = request.args.get("time")
-    return content
+@app.route("/api/debug")
+def debug():
+    global light, servoAlpha, lightLevel
+    data = {
+        "Light" : light, 
+        "Servo" : servoAlpha, 
+        "LightLevel" : lightLevel,
+    }
+    return data
     
 
 startAll()
