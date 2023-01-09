@@ -16,7 +16,8 @@
 //Led
 #define LED_PIN 2
 
-
+//Timer
+#define SAMPLING_TIME pow(10, 6)
 
 
 
