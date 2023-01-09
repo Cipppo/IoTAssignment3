@@ -20,14 +20,14 @@ CORS(app)
 
 #-------------ARDUINO-----------
 ser = serial.Serial(port="/dev/ttyACM0", baudrate=9600)
-systems = [0]
+light = 0
 servoAlpha = 0
 opened = False
 
-def create_JSON_data(component, value):
+def create_JSON_data(lightValue, servoValue):
     data = {
-        "component": component, 
-        "value": value,
+        "Light": lightValue, 
+        "Servo": servoValue,
     }
     json_str = json.dumps(data)
     #print(json_str + '\n')
@@ -62,24 +62,24 @@ def is_daytime():
 
 def arduino_handler():
     global servoAlpha, opened
-    lastLightRead = systems[0]
+    lastLightRead = light
     lastServoRead = servoAlpha
     while True:
-        if(systems[0] != lastLightRead):
-            data = create_JSON_data("lights", systems[0])
+        if(light != lastLightRead):
+            data = create_JSON_data(light, servoAlpha)
             ser.write(data.encode())
-            lastLightRead = systems[0]
+            lastLightRead = light
             print(data)
         if((not is_servo_open() and is_daytime() and opened == False)):
             servoAlpha = 180
             opened = True
-            data = create_JSON_data("servo", servoAlpha)
+            data = create_JSON_data(light, servoAlpha)
             print("Detected Morning opening")
             ser.write(data.encode())
             lastServoRead = servoAlpha
             print(data)
         if(lastServoRead != servoAlpha):
-            data = create_JSON_data("servo", servoAlpha)
+            data = create_JSON_data(light, servoAlpha)
             ser.write(data.encode())
             lastServoRead = servoAlpha
             print(data)
@@ -112,8 +112,9 @@ def subscribe_mqtt(client: mqtt_client):
 
 @app.route("/api/led")
 def led():
+    global light
     status = request.args.get("LED")
-    systems[0] = int(status)
+    light = int(status)
     return status
 
 @app.route("/api/slider", methods=['POST'])
