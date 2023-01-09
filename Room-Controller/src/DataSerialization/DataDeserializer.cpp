@@ -1,17 +1,13 @@
-#include <ArduinoJson.h>
-
-
 #include "DataDeSerializer.h"
 
 
-
-void DataDeSerializer::deSerialize(String serializedData){
-    DeserializationError error = deserializeJson(this->doc, serializedData);
-    if(error){
-        Serial.println("Si e' rotto o non e' stato ricevuto");
+ReceiveDatagram* DataDeSerializer::getValue(){
+    String json = Serial.readString();
+    if(!json.equals("")){
+        DynamicJsonDocument doc(256);
+        deserializeJson(doc, json);
+        int lightValue = doc["Light"];
+        int servoValue = doc["Servo"];
+        return new ReceiveDatagram(lightValue, servoValue);
     }
-}
-
-int DataDeSerializer::get(String key){
-    return this->doc[key];
 }

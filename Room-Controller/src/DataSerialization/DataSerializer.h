@@ -5,9 +5,9 @@
 
 class DataSerializer{
 private:
-    StaticJsonDocument<200> doc;
+    int JsonSerializer();
 public:
-    String serialize(String key, int value);
+    void serialize(String component, int value);
 };
 
 

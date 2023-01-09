@@ -2,13 +2,13 @@
 #define __DATADESERIALIZER__
 
 #include <ArduinoJson.h>
+#include "ReceiveDatagram.h"
 
 class DataDeSerializer{
     private:
-        StaticJsonDocument<200> doc;
+        int JsonDeserializer();
     public:
-        void deSerialize(String serializedData);
-        int get(String key);
+        ReceiveDatagram* getValue();
 };
 
 

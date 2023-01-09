@@ -1,11 +1,12 @@
-
 #include "DataSerializer.h"
-#include <ArduinoJson.h>
 
-String DataSerializer::serialize(String key, int value){
-    this->doc[key] = value;
-    char jsonStr[200];
-    serializeJson(this->doc, jsonStr);
-    return String(jsonStr);
+
+void DataSerializer::serialize(String component, int value){
+    String json;
+    DynamicJsonDocument doc(256);
+    doc["component"] = component;
+    doc["value"] = value;
+    serializeJson(doc, json);
+    Serial.println(json);
 }
 
