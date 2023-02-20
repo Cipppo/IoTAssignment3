@@ -8,10 +8,17 @@ Photores::Photores(int pin){
     pinMode(this->pin, INPUT);
 }
 
-int Photores::readValue(){
-    int value = analogRead(this->pin);
-    double valueInVolt = ((double) value) * 5/1024;
-    return value;
+int Photores::getValue(){
+    return this->value;
+}
+
+double Photores::getValueInVolt(){
+    return this->valueInVolt;
+}
+
+void Photores::readValue(){
+    this->value = analogRead(this->pin);
+    this->valueInVolt = ((double) value) * 5/1024;
 }
 
 int Photores::getPin(){

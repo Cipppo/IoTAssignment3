@@ -8,9 +8,13 @@
 class Photores{
     private:
         int pin;
+        int value;
+        double valueInVolt;
     public:
         Photores(int pin);
-        int readValue();
+        void readValue();
+        int getValue();
+        double getValueInVolt();
         int getPin();
 };
 
