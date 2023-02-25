@@ -13,7 +13,7 @@
 
 //--PIR--
 #define CALIBRATION_TIME 10
-#define PIR_PIN 9
+#define PIR_PIN 14 //D5
 
 //--LED--
 #define LED_PIN 3
