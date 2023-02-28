@@ -11,6 +11,11 @@ void initPDS(int pirPin, int ledPin){
 
 void tickPDS(){
     pds->detectPresence();
+    if(pds->getPresence() == true){
+        pds->turnOnLed();
+    }else{
+        pds->turnOffLed();
+    }
 }
 
 bool getPresence(){
