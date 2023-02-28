@@ -13,9 +13,19 @@
 
 //--PIR--
 #define CALIBRATION_TIME 10
-#define PIR_PIN 14 //D5
+//D5
+#define PIR_PIN 14 
 
 //--LED--
-#define LED_PIN 3
+//D3
+#define LED_PIN 0
+
+//PHOTORESISTOR
+//D4
+#define PHOTO_PIN 2 
+
+//--TIMER--
+#define TIMER_SAMPLING pow(10, 6)
+
 
 #endif
