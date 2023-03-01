@@ -8,11 +8,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
 import com.example.room_mobile_app.databinding.FragmentFirstBinding;
 
 public class FirstFragment extends Fragment {
 
-private FragmentFirstBinding binding;
+    private FragmentFirstBinding binding;
 
     @Override
     public View onCreateView(
@@ -20,8 +21,8 @@ private FragmentFirstBinding binding;
             Bundle savedInstanceState
     ) {
 
-      binding = FragmentFirstBinding.inflate(inflater, container, false);
-      return binding.getRoot();
+        binding = FragmentFirstBinding.inflate(inflater, container, false);
+        return binding.getRoot();
 
     }
 
@@ -37,7 +38,7 @@ private FragmentFirstBinding binding;
         });
     }
 
-@Override
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
