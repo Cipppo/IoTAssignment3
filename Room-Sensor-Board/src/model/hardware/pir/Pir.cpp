@@ -22,7 +22,7 @@ void Pir::calibrate(){
 
 bool Pir::scan(){
     int detection = digitalRead(this->pin);
-    Serial.println(detection);
+    //Serial.println(detection);
     if(detection == HIGH){
         return true;
     }else{

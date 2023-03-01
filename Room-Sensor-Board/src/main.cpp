@@ -6,35 +6,36 @@
 #include "constants/Constants.h"
 #include "model/mqttClient/MQTTClient.h"
 #include "model/hardware/pir/Pir.h"
+#include "model/hardware/photoresistor/photores.h"
+#include "serialization/DataSerialization.h"
+#include "smartRoom/SmartRoom.h"
 
-Pir* pir;
 
-
-
-
+WiFiNode* wifi;
+MQTTClient* mqtt;   
+DataSerialization* serializer;
+SmartRoom* smartRoom;
 
 void setup() {
-    Serial.begin(9600);
-    pinMode(PIR_PIN,INPUT);
 
-    
-    //give the sensor some time to calibrate
-    Serial.print("Calibrating sensor... ");
-    for(int i = 0; i < CALIBRATION_TIME; i++){
-        Serial.print(".");
-        delay(1000);
-    }
-    Serial.println(" done");
-    Serial.println("PIR SENSOR READY.");
-    delay(50);
+  Serial.begin(9600);
+  smartRoom->init();
+  wifi = new WiFiNode();
+  mqtt = new MQTTClient();
+  serializer = new DataSerialization();
 
 }
 
 void loop() {
-    
-  int detected = digitalRead(PIR_PIN);
-  if (detected == HIGH){
-    Serial.println("detected!");  
+
+  while(wifi->isConnected()){
+    smartRoom->tick();
+    String toSend = serializer->serialize("Light", smartRoom->isLight());
+    mqtt->sendMessage(toSend);
+    String toSend2 = serializer->serialize("Pir", smartRoom->getPeople());
+    mqtt->sendMessage(toSend2);
+    delay(1000);
   }
+
 
 }

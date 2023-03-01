@@ -17,12 +17,13 @@
 #define PIR_PIN 14 
 
 //--LED--
-//D3
-#define LED_PIN 0
+//D0
+#define LED_PIN 16
 
 //PHOTORESISTOR
 //D4
-#define PHOTO_PIN 2 
+#define PHOTO_PIN A0
+#define MINIMUM_LIGHT_VALUE 700
 
 //--TIMER--
 #define TIMER_SAMPLING pow(10, 6)
