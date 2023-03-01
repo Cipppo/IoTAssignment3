@@ -19,10 +19,12 @@ app = Flask(__name__)
 CORS(app)
 
 #-------------ARDUINO-----------
-ser = serial.Serial(port="COM3", baudrate=9600)
+#ser = serial.Serial(port="COM3", baudrate=9600)
 light = 0
 servoAlpha = 0
 lightLevel = 0
+dark = 0
+people = 0
 opened = True
 
 def create_JSON_data(lightValue, servoValue):
@@ -99,8 +101,8 @@ def arduino_handler():
 
 def startAll():
     server_thread = threading.Thread(target=server_handler).start()
-    #mqtt_thread = threading.Thread(target=mqtt_handler).start() DISABLED FOR NO USING
-    arduino_thread = threading.Thread(target=arduino_handler).start()
+    mqtt_thread = threading.Thread(target=mqtt_handler).start() 
+    #arduino_thread = threading.Thread(target=arduino_handler).start()
 
 def connect_mqtt():
     def on_connect(client, userdata, flags, rc):
@@ -115,7 +117,17 @@ def connect_mqtt():
 
 def subscribe_mqtt(client: mqtt_client):
     def on_message(client, userdata, msg):
-        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        global dark, people
+        #print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        data = msg.payload.decode()
+        data = json.loads(data)
+        component = data['component']
+        value = data['value']
+        if(component == 'Light'):
+            dark = value
+        elif(component == "Pir"):
+            people = value
+
     client.subscribe(topic)
     client.on_message = on_message
 
