@@ -8,7 +8,7 @@
 #include "SerialCommunication/SerialMsgHandler.h"
 #include "DataSerialization/ReceiveDatagram.h"
 #include "Controller/Controller.h"
-
+#include "SerialCommunication/Msg.h"
 #define PIN 2
 
 
@@ -19,10 +19,15 @@ Controller* controller;
 
 
 void setup(){
-  msgHandler->init();
+  Serial.begin(9600);
   //Serial.println("Tra 6 secondi il messaggio verra' letto");
 }
 
 void loop(){
-  
+  while(Serial.available() > 0){
+    Serial.println("Reading:");
+    String message = Serial.readStringUntil('/n');
+    Serial.println(message);
+    delay(2000);
+  }
 };
