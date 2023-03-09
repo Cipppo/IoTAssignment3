@@ -3,39 +3,22 @@
 
 
 
-String content;
-SerialMsgHandler MsgService;
-
-bool SerialMsgHandler::isMsgAvailable(){
-  this->serialEvent();
-  return msgAvailable;
+SerialMsgHandler::SerialMsgHandler(){
+  this->deSerializer = new DataDeSerializer();
 }
 
-Msg* SerialMsgHandler::receiveMsg(){
-  if (msgAvailable){
-    Msg* msg = currentMsg;
-    msgAvailable = false;
-    currentMsg = NULL;
-    content = "";
-    return msg;  
-  } else {
-    return NULL; 
+
+bool SerialMsgHandler::getMessage(){
+  while(Serial.available()){
+    this->datagram = this->deSerializer->getValue();
+    return true;
   }
 }
 
-void SerialMsgHandler::init(){
-  Serial.begin(9600);
-  content.reserve(256);
-  content = "";
-  currentMsg = NULL;
-  msgAvailable = false;  
+int SerialMsgHandler::getLightValue(){
+  this->datagram->getLightValue();
 }
 
-void SerialMsgHandler::serialEvent() {
-  /* reading the content */
-  while (Serial.available()) {
-      content = Serial.readString();
-      MsgService.currentMsg = new Msg(content);
-      MsgService.msgAvailable = true;   
-  }
+int SerialMsgHandler::getServoValue(){
+  this->datagram->getServoAngle();
 }
