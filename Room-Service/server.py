@@ -13,13 +13,14 @@ broker = 'broker.mqtt-dashboard.com'
 port = 1883
 topic = "light/mqtt"
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
+client = mqtt_client.Client(client_id)
 
 #-------------FLASK-------------
 app = Flask(__name__)
 CORS(app)
 
 #-------------ARDUINO-----------
-#ser = serial.Serial(port="COM3", baudrate=9600)
+ser = serial.Serial(port="/dev/ttyACM0", baudrate=9600)
 light = 0
 servoAlpha = 0
 lightLevel = 0
@@ -102,18 +103,25 @@ def arduino_handler():
 def startAll():
     server_thread = threading.Thread(target=server_handler).start()
     mqtt_thread = threading.Thread(target=mqtt_handler).start() 
-    #arduino_thread = threading.Thread(target=arduino_handler).start()
+    arduino_thread = threading.Thread(target=arduino_handler).start()
 
 def connect_mqtt():
+    global client
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
             print("Connected to MQTT Broker!")
         else:
             print("Failed to connect.")
-    client = mqtt_client.Client(client_id)
     client.on_connect = on_connect
     client.connect(broker, port)
     return client
+
+def checkMQTTConnection():
+    global client
+    if(client.is_connected()):
+        return True
+    else:
+        return False
 
 def subscribe_mqtt(client: mqtt_client):
     def on_message(client, userdata, msg):
@@ -124,7 +132,7 @@ def subscribe_mqtt(client: mqtt_client):
         component = data['component']
         value = data['value']
         if(component == 'Light'):
-            dark = value
+            dark = abs(value -1)
         elif(component == "Pir"):
             people = value
 
@@ -150,13 +158,22 @@ def slider():
 
 @app.route("/api/debug")
 def debug():
-    global light, servoAlpha, lightLevel
+    global light, servoAlpha, dark
     data = {
         "Light" : light, 
         "Servo" : servoAlpha, 
-        "LightLevel" : lightLevel,
+        "LightLevel" : dark,
+        "People" : people,
     }
     return data
+
+@app.route("/api/connection/check", methods=['POST'])
+def checkConnection():
+    if(checkConnection()):
+        return 1
+    else:
+        return 0
+
     
 
 startAll()
