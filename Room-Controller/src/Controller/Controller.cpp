@@ -6,11 +6,12 @@ Controller::Controller(){
 }
 
 void Controller::init(){
-    Serial.println("Init Called");
+    this->led = new Led(LED_PIN);
+    this->servo = new Servo(SERVO_PIN);
 }
 
 void Controller::tick(){
-    Serial.println("Tick Called");
+    //USARE IL PORCODIO DI HANDLER DEI MESSAGGI 
 }
 
 Timer* Controller::getTimer(){
