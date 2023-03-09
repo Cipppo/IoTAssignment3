@@ -9,8 +9,8 @@ let data = document.getElementById('Data');
 let debugLed = document.getElementById('LED_DEBUG');
 let debugServo = document.getElementById('SERVO_DEBUG');
 let lightValueDebug = document.getElementById('LIGHT_VALUE')
-
-
+let peopleDebug = document.getElementById("PEOPLE_VALUE")
+let title = document.getElementById("Title");
 
 function updateClock() {
     // Ivo's content to create the date.
@@ -25,8 +25,23 @@ function updateDebug() {
     const res = axios.get('http://127.0.0.1:5555/api/debug').then(result=> {
         debugLed.innerHTML = result.data["Light"];
         debugServo.innerHTML = result.data["Servo"];
-        lightValueDebug.innerHTML = result.data["LightLevel"]
+        lightValueDebug.innerHTML = result.data["LightLevel"];
+        peopleDebug.innerHTML = result.data['People'];
     });
+}
+
+function checkConnection(){
+    const res = axios.post('http://127.0.0.1:5555/api/connection/check').then(result => {
+        if(result){
+            if(result == 1){
+                title.className("text-success");
+            }else{
+                title.className("text-danger");
+            }
+        }else{
+            title.className("text-danger");
+        }
+    })
 }
 
 spegni.addEventListener("click", function(e){
