@@ -7,6 +7,7 @@
 #define ZERO_SERVO 550
 #define FLAT_ANGLE_SERVO 2300
 #define FLAT_ANGLE 180
+#define SERVO_PIN 3
 
 //Photores
 #define FREQUENCY 5
