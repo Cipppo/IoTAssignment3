@@ -1,4 +1,4 @@
-package com.example.room_mobile_app;
+package com.example.remoteblinkapp;
 
 import java.util.UUID;
 
