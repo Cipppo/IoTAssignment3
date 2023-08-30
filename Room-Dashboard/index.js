@@ -30,6 +30,12 @@ function updateDebug() {
     });
 }
 
+function init() {
+    const res = axios.get('http://127.0.0.1:5555/api/debug').then(result=> {
+        slider.value = result.data["Servo"];
+    });
+}
+
 function checkConnection(){
     const res = axios.post('http://127.0.0.1:5555/api/connection/check').then(result => {
         if(result){
@@ -74,5 +80,7 @@ invia.addEventListener("click", function(e){
     .catch(error => console.error(error));
 })
 
+
 setInterval(updateClock, 1000);
 setInterval(updateDebug, 500);
+init();
