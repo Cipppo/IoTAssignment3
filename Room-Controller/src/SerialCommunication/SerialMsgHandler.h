@@ -3,23 +3,21 @@
 
 #include "Arduino.h"
 #include "Msg.h"
-#include "DataSerialization/ReceiveDatagram.h"
-#include "DataSerialization/DataDeSerializer.h"
+
 
 class SerialMsgHandler{
-    private:
-        ReceiveDatagram* datagram;
-        DataDeSerializer* deSerializer;
     public:
-        SerialMsgHandler();
-        bool getMessage();
-        int getLightValue();
-        int getServoValue();
-
+        Msg* currentMsg;
+        bool msgAvailable;
+        void init();
+        bool isMsgAvailable();
+        Msg* receiveMsg();
+        void serialEvent();
+        void sendMsg(String msg);
 
 };
 
-
+extern SerialMsgHandler MsgService;
 
 
 #endif
