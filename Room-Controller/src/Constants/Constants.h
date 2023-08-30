@@ -8,6 +8,7 @@
 #define FLAT_ANGLE_SERVO 2300
 #define FLAT_ANGLE 180
 #define SERVO_PIN 3
+#define SERVO "Servo"
 
 //Photores
 #define FREQUENCY 5
@@ -16,7 +17,7 @@
 
 //Led
 #define LED_PIN 2
-
+#define LIGHT "Light"
 //Timer
 #define SAMPLING_TIME pow(10, 6)
 
