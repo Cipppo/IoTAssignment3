@@ -18,8 +18,13 @@
 //Led
 #define LED_PIN 2
 #define LIGHT "Light"
+#define ON 1
+#define OFF 0
+
 //Timer
 #define SAMPLING_TIME pow(10, 6)
+
+
 
 
 
