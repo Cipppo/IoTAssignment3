@@ -26,7 +26,7 @@ servoAlpha = 0
 lightLevel = 0
 dark = 0
 people = 0
-opened = True
+opened = False
 
 def create_JSON_data(lightValue, servoValue):
     data = {
@@ -54,9 +54,9 @@ def get_hours():
 
 def is_servo_open():
     if(servoAlpha < 180):
-        return True
-    else:
         return False
+    else:
+        return True
 
 def is_daytime():
     if(int(get_hours()) >= 8 and int(get_hours()) < 19):
@@ -75,7 +75,7 @@ def arduino_handler():
             lastLightRead = light
             print(data)
         if((not is_servo_open() and is_daytime() and opened == False)):
-            servoAlpha = 0
+            servoAlpha = 180
             opened = True
             data = create_JSON_data(light, servoAlpha)
             print("Detected Morning opening")
