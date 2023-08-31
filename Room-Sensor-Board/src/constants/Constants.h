@@ -12,7 +12,7 @@
 #define PORT 1883
 
 //--PIR--
-#define CALIBRATION_TIME 10
+#define CALIBRATION_TIME 5
 //D5
 #define PIR_PIN 14 
 
