@@ -7,6 +7,8 @@
 #include "Hardware/Led/Led.h"
 #include "Constants/Constants.h"
 #include "SerialCommunication/SerialMsgHandler.h"
+#include <ArduinoJson.h>
+
 
 class Controller : Task{
     private:
@@ -14,6 +16,8 @@ class Controller : Task{
         SerialMsgHandler* msgHandler;
         Servo* servo;
         Led* led;
+        DynamicJsonDocument *serialMsg;
+        bool readSerialMessage();
     public:
         Controller();
         void init();
