@@ -4,11 +4,16 @@
 #include "Logic/lightDetectionLogic/LogicLDS.h"
 #include "Logic/peopleDetectionLogic/LogicPDS.h"
 #include "constants/Constants.h"
+#include "model/wifiNode/WiFiNode.h"
+#include "model/mqttClient/MQTTClient.h"
+
 #include "Arduino.h"
 
 
 
 class SmartRoom{
+
+    
 
     public:
         SmartRoom();
