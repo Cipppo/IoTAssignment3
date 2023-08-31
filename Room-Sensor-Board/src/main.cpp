@@ -16,6 +16,8 @@ MQTTClient* mqtt;
 DataSerialization* serializer;
 SmartRoom* smartRoom;
 
+int peopleValue = 0;
+
 void setup() {
 
   Serial.begin(9600);
@@ -30,10 +32,17 @@ void loop() {
 
   while(wifi->isConnected()){
     smartRoom->tick();
-    String toSend = serializer->serialize("Light", smartRoom->isLight());
-    mqtt->sendMessage(toSend);
-    String toSend2 = serializer->serialize("Pir", smartRoom->getPeople());
-    mqtt->sendMessage(toSend2);
+    int lightValue = smartRoom->isLight();
+
+    String toSend = serializer->serialize("Light", lightValue);
+    String toSend2 = serializer->serialize("Pir", peopleValue);
+    if(peopleValue == 1){
+      Serial.println("Persona trovata, adesso aspetto");
+      mqtt->sendMessage(toSend);
+      mqtt->sendMessage(toSend2);
+      delay(5000);
+    }
+    Serial.println(toSend2);
     delay(1000);
   }
 
