@@ -3,10 +3,8 @@
 
 #include "Constants/Constants.h"
 #include "Hardware/Led/Led.h"
-#include "DataSerialization/DataDeSerializer.h"
 #include "Hardware/Photores/Photores.h"
 #include "SerialCommunication/SerialMsgHandler.h"
-#include "DataSerialization/ReceiveDatagram.h"
 #include "Controller/Controller.h"
 #include "SerialCommunication/Msg.h"
 #define PIN 2
@@ -16,18 +14,28 @@ SerialMsgHandler* msgHandler;
 Controller* controller;
 
 
-
+void changeState(){
+  controller->getTimer()->changeState();
+}
 
 void setup(){
   Serial.begin(9600);
   //Serial.println("Tra 6 secondi il messaggio verra' letto");
+  controller = new Controller();
+  controller->init();
+  controller->getTimer()->getTimerOne()->attachInterrupt(changeState);
 }
 
 void loop(){
+  /*
   while(Serial.available() > 0){
     Serial.println("Reading:");
     String message = Serial.readStringUntil('/n');
     Serial.println(message);
+    
     delay(2000);
   }
+  */
+ controller->getTimer()->waitForTheNextTick();
+ controller->tick();
 };
