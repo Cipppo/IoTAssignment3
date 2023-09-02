@@ -1,24 +1,44 @@
-#include "SerialMsgHandler.h"
+
 #include "Arduino.h"
+#include "SerialMsgHandler.h"
 
 
+String content;
+SerialMsgHandler MsgService;
 
-SerialMsgHandler::SerialMsgHandler(){
-  this->deSerializer = new DataDeSerializer();
+bool SerialMsgHandler::isMsgAvailable(){
+  this->serialEvent();
+  return msgAvailable;
 }
 
-
-bool SerialMsgHandler::getMessage(){
-  while(Serial.available()){
-    this->datagram = this->deSerializer->getValue();
-    return true;
+Msg* SerialMsgHandler::receiveMsg(){
+  if(msgAvailable){
+    Msg* msg = currentMsg;
+    msgAvailable = false;
+    currentMsg = NULL;
+    content = "";
+    return msg;
+  }else {
+    return NULL;
   }
 }
 
-int SerialMsgHandler::getLightValue(){
-  this->datagram->getLightValue();
+void SerialMsgHandler::init(){
+  Serial.begin(9600);
+  content.reserve(256);
+  content = "";
+  currentMsg = NULL;
+  msgAvailable = false;
 }
 
-int SerialMsgHandler::getServoValue(){
-  this->datagram->getServoAngle();
+void SerialMsgHandler::sendMsg(String msg){
+  Serial.println(msg);
+}
+
+void SerialMsgHandler::serialEvent(){
+  while(Serial.available()){
+    content = Serial.readString();
+    MsgService.currentMsg = new Msg(content);
+    MsgService.msgAvailable = true;
+  }
 }
