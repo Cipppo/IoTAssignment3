@@ -172,7 +172,7 @@ public class ScanActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     private void onDeviceClicked(BluetoothDevice device) {
         logMessage(device.getName());
-        Intent intent = new Intent(this, LedSwitchActivity.class);
+        Intent intent = new Intent(this, RoomControlActivity.class);
         intent.putExtra(X_BLUETOOTH_DEVICE_EXTRA, device);
         startActivity(intent);
     }

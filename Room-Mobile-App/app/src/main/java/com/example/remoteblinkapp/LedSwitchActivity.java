@@ -45,7 +45,7 @@ public class LedSwitchActivity extends AppCompatActivity {
     private void sendMessage() {
         new Thread(() -> {
             try {
-                String message = ledState ? "off\n" : "on\n";
+                String message = ledState ? "5555" : "6666";
                 bluetoothOutputStream.write(message.getBytes(StandardCharsets.UTF_8));
                 ledState = !ledState;
                 runOnUiThread(() -> remoteButton.setBackgroundColor(ledState? Color.GREEN : Color.RED));
