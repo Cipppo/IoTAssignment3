@@ -7,7 +7,7 @@
 #define ZERO_SERVO 550
 #define FLAT_ANGLE_SERVO 2300
 #define FLAT_ANGLE 180
-#define SERVO_PIN 3
+#define SERVO_PIN 7
 #define SERVO "Servo"
 
 //Photores
@@ -24,7 +24,12 @@
 //Timer
 #define SAMPLING_TIME pow(10, 6)
 
+//Bluetooth 
 
+#define TX_PIN 4
+#define RX_PIN 3
+#define LEDON "5555"
+#define LEDOFF "6666"
 
 
 

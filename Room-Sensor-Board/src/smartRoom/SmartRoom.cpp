@@ -7,16 +7,19 @@
 
 void SmartRoom::init(){
     initLDS(PHOTO_PIN);
-    initPDS(PIR_PIN, LED_PIN);
+    //initPDS(PIR_PIN, LED_PIN);
 }
 
 void SmartRoom::tick(){
     tickLDS();
-    tickPDS();
+    //tickPDS();
+
+
 }
 
 int SmartRoom::isLight(){
-    int value = getLightValue();
+    int value = getLightInVoltValue();
+    Serial.println(value);
     if(value < MINIMUM_LIGHT_VALUE){
         return 0;
     }else{
@@ -25,5 +28,6 @@ int SmartRoom::isLight(){
 }
 
 int SmartRoom::getPeople(){
-    return getPresence();
+    getPresence();
+    return 1;
 }

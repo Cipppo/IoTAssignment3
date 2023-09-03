@@ -14,7 +14,7 @@
 //--PIR--
 #define CALIBRATION_TIME 5
 //D5
-#define PIR_PIN 14 
+#define BUTTON_PIN 14 
 
 //--LED--
 //D0
@@ -23,10 +23,11 @@
 //PHOTORESISTOR
 //D4
 #define PHOTO_PIN A0
-#define MINIMUM_LIGHT_VALUE 700
+#define MINIMUM_LIGHT_VALUE 2.6
 
 //--TIMER--
 #define TIMER_SAMPLING pow(10, 6)
+
 
 
 #endif

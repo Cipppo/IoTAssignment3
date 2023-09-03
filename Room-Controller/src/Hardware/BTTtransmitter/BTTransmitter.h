@@ -15,7 +15,7 @@ class BTTransmitter : public Component{
         char* name;
     
     public:
-        BTTransmitter(int rxPin, int txPin, char* name);
+        BTTransmitter(int rxPin, int txPin);
         void init();
         bool isAvailable();
         Msg* read();

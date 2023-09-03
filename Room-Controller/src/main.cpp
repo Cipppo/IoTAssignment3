@@ -20,22 +20,13 @@ void changeState(){
 
 void setup(){
   Serial.begin(9600);
-  //Serial.println("Tra 6 secondi il messaggio verra' letto");
   controller = new Controller();
   controller->init();
   controller->getTimer()->getTimerOne()->attachInterrupt(changeState);
 }
 
 void loop(){
-  /*
-  while(Serial.available() > 0){
-    Serial.println("Reading:");
-    String message = Serial.readStringUntil('/n');
-    Serial.println(message);
-    
-    delay(2000);
-  }
-  */
+
  controller->getTimer()->waitForTheNextTick();
  controller->tick();
 };

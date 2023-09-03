@@ -10,5 +10,4 @@ void tickLDS();
 int getLightValue();
 float getLightInVoltValue();
 
-
 #endif

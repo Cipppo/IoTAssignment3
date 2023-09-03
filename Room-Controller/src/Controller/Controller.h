@@ -8,6 +8,7 @@
 #include "Constants/Constants.h"
 #include "SerialCommunication/SerialMsgHandler.h"
 #include <ArduinoJson.h>
+#include "Hardware/BTTtransmitter/BTTransmitter.h"
 
 
 class Controller : Task{
@@ -16,13 +17,17 @@ class Controller : Task{
         SerialMsgHandler* msgHandler;
         Servo* servo;
         Led* led;
+        BTTransmitter* bluetooth;
         DynamicJsonDocument *serialMsg;
-        bool readSerialMessage();
+        SoftwareSerial* channel;
+        DynamicJsonDocument *bluetoothMessage;
     public:
         Controller();
         void init();
         void tick();
         Timer* getTimer();
+        bool readSerialMessage();
+        String readBTMessage();
 };
 
 #endif

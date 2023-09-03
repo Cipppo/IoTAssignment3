@@ -3,10 +3,9 @@
 #include "BTTransmitter.h"
 
 
-BTTransmitter::BTTransmitter(int rxPin, int txPin, char* name){
+BTTransmitter::BTTransmitter(int rxPin, int txPin){
     this->rxPin = rxPin;
     this->txPin = txPin;
-    this->name = name;
 }
 
 void BTTransmitter::init(){

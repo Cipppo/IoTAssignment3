@@ -24,9 +24,10 @@ ser = serial.Serial(port="/dev/ttyACM0", baudrate=9600)
 light = 0
 servoAlpha = 0
 lightLevel = 0
-dark = 0
+detectedLight = 0
 people = 0
 opened = False
+overrideLights = 0
 
 def create_JSON_data(lightValue, servoValue):
     data = {
@@ -65,15 +66,27 @@ def is_daytime():
         return False 
 
 def arduino_handler():
-    global servoAlpha, opened
+    global servoAlpha, opened, detectedLight, overrideLights
     lastLightRead = light
     lastServoRead = servoAlpha
     while True:
-        if(light != lastLightRead):
+        if(detectedLight == 0 and is_daytime() and people == 1 and overrideLights == 0):
+            data = create_JSON_data(1, servoAlpha)
+            ser.write(data.encode())
+            lastLightRead = 1
+            overrideLights = 1
+            print(data)
+        if(people == 0 and is_daytime() and overrideLights == 1):
+            data = create_JSON_data(0, servoAlpha)
+            ser.write(data.encode())
+            lastLightRead = 0
+            overrideLights = 0
+        if(light != lastLightRead and overrideLights == 0):
             data = create_JSON_data(light, servoAlpha)
             ser.write(data.encode())
             lastLightRead = light
             print(data)
+            print("yo")
         if((not is_servo_open() and is_daytime() and opened == False)):
             servoAlpha = 180
             opened = True
@@ -82,7 +95,7 @@ def arduino_handler():
             ser.write(data.encode())
             lastServoRead = servoAlpha
             print(data)
-        if(is_servo_open() and not is_daytime() and opened == True):
+        if(is_servo_open() and not is_daytime() and opened == True and people == 0):
             servoAlpha = 180
             opened = False
             data = create_JSON_data(light, servoAlpha)
@@ -125,14 +138,14 @@ def checkMQTTConnection():
 
 def subscribe_mqtt(client: mqtt_client):
     def on_message(client, userdata, msg):
-        global dark, people
-        #print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        global detectedLight, people
+        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
         data = msg.payload.decode()
         data = json.loads(data)
         component = data['component']
         value = data['value']
         if(component == 'Light'):
-            dark = abs(value -1)
+            detectedLight = value
         elif(component == "Pir"):
             people = value
 
@@ -158,11 +171,11 @@ def slider():
 
 @app.route("/api/debug")
 def debug():
-    global light, servoAlpha, dark
+    global light, servoAlpha, detectedLight
     data = {
         "Light" : light, 
         "Servo" : servoAlpha, 
-        "LightLevel" : dark,
+        "LightLevel" : detectedLight,
         "People" : people,
     }
     return data
